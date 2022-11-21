@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printer_test/print_page.dart';
 import 'package:printer_test/test_print.dart';
 import 'package:printing/printing.dart';
 
@@ -21,7 +20,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: const MyHomePage(
+        title: '',
+      ),
     );
   }
 }
@@ -35,6 +36,109 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  void createPdf() async {
+    final doc = pw.Document(
+      version: PdfVersion.pdf_1_5, compress: true,
+      //  title: widget.companyName,author: widget.name,
+    );
+    final font = await PdfGoogleFonts.tinosBold();
+    final font2 = await PdfGoogleFonts.tinosRegular();
+    final image = await imageFromAssetBundle('assets/image/openheartlogo.png');
+//final provider =  await imageFromAssetBundle(profileImage);
+    doc.addPage(pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Container(
+                  margin: const pw.EdgeInsets.only(left: 0, right: 0),
+                  child: pw.Row(children: [
+                    pw.Text("",
+                        style: pw.TextStyle(
+                            font: font,
+                            fontWeight: pw.FontWeight.bold,
+                            color: PdfColors.green,
+                            fontSize: 15)),
+                    pw.Spacer(),
+                    pw.Image(image, width: 50, height: 50),
+                    pw.Column(children: [
+                      pw.Text("Open Heart Recruitment Ltd",
+                          style: pw.TextStyle(
+                              font: font,
+                              fontWeight: pw.FontWeight.bold,
+                              color: PdfColors.green,
+                              fontSize: 18)),
+                      pw.Text("A Caring Compassionate Community",
+                          style: pw.TextStyle(
+                            font: font,
+                            fontWeight: pw.FontWeight.normal,
+                            color: PdfColors.black,
+                          )),
+                    ]),
+                  ]),
+                ),
+                pw.SizedBox(height: 70),
+                pw.Text("Dear Currie,",
+                    style: pw.TextStyle(
+                      font: font2,
+                      fontWeight: pw.FontWeight.normal,
+                      color: PdfColors.black,
+                    )),
+                pw.SizedBox(height: 50),
+                pw.Text("A LETTER OF ATTESTATION",
+                    style: pw.TextStyle(
+                      font: font,
+                      fontWeight: pw.FontWeight.normal,
+                      color: PdfColors.black,
+                    )),
+                pw.SizedBox(height: 10),
+                pw.Text(
+                    "I am writing to testify that PE & JE Healthcare Limited is in partnership "
+                    " with our company... as a sub-contractor. PE & JE Healthcare Limited provides carers "
+                    "and nurses to my clients. Their vetting and staff recruitment are of a higher standard,"
+                    " compliant and responsive to industrial requirements. This can be evidenced by the quality"
+                    " of the excellent staff they supply to us.",
+                    style: pw.TextStyle(
+                      font: font2,
+                      fontWeight: pw.FontWeight.normal,
+                      color: PdfColors.black,
+                    )),
+                pw.SizedBox(height: 30),
+                pw.Text("Yours faithfully ",
+                    style: pw.TextStyle(
+                      font: font2,
+                      fontWeight: pw.FontWeight.normal,
+                      color: PdfColors.black,
+                    )),
+                pw.Text("Emmanuel Chukwudi Odoh",
+                    style: pw.TextStyle(
+                      font: font2,
+                      fontWeight: pw.FontWeight.normal,
+                      color: PdfColors.black,
+                    )),
+                pw.Text("Director",
+                    style: pw.TextStyle(
+                      font: font2,
+                      fontWeight: pw.FontWeight.normal,
+                      color: PdfColors.black,
+                    )),
+                pw.Text("Open Heart Recruitment Ltd",
+                    style: pw.TextStyle(
+                      font: font2,
+                      fontWeight: pw.FontWeight.normal,
+                      color: PdfColors.black,
+                    )),
+              ]);
+        }));
+    await Printing.layoutPdf(
+        onLayout: (
+      PdfPageFormat format,
+    ) async =>
+            doc.save());
+    //  await Printing.sharePdf(bytes: await doc.save(), filename: 'my-document.pdf');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,12 +147,23 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[],
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Center(
+            child: TextButton.icon(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomePage()));
+              },
+              icon: const Icon(Icons.print),
+              label: const Text("Print"),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigator.push(context,
-          //     MaterialPageRoute(builder: (context) => const TestPrintPage()));
+          createPdf();
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
