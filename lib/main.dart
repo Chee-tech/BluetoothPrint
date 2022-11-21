@@ -61,21 +61,37 @@ class _MyHomePageState extends State<MyHomePage> {
                             color: PdfColors.green,
                             fontSize: 15)),
                     pw.Spacer(),
-                    pw.Image(image, width: 50, height: 50),
-                    pw.Column(children: [
-                      pw.Text("Open Heart Recruitment Ltd",
-                          style: pw.TextStyle(
-                              font: font,
-                              fontWeight: pw.FontWeight.bold,
-                              color: PdfColors.green,
-                              fontSize: 18)),
-                      pw.Text("A Caring Compassionate Community",
-                          style: pw.TextStyle(
-                            font: font,
-                            fontWeight: pw.FontWeight.normal,
-                            color: PdfColors.black,
-                          )),
-                    ]),
+                    pw.Image(image, width: 70, height: 70),
+                    pw.SizedBox(width: 10),
+                    pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        mainAxisAlignment: pw.MainAxisAlignment.start,
+                        children: [
+                          pw.Text("Open Heart Recruitment Ltd",
+                              style: pw.TextStyle(
+                                  font: font,
+                                  fontWeight: pw.FontWeight.bold,
+                                  color: PdfColors.green,
+                                  fontSize: 18)),
+                          pw.Text("A Caring Compassionate Community",
+                              style: pw.TextStyle(
+                                font: font,
+                                fontWeight: pw.FontWeight.normal,
+                                color: PdfColors.black,
+                              )),
+                          pw.Text("Email: info@openheartrecruitment.com",
+                              style: pw.TextStyle(
+                                font: font,
+                                fontWeight: pw.FontWeight.normal,
+                                color: PdfColors.black,
+                              )),
+                          pw.Text("Contact address: 07424764440",
+                              style: pw.TextStyle(
+                                font: font,
+                                fontWeight: pw.FontWeight.normal,
+                                color: PdfColors.black,
+                              )),
+                        ]),
                   ]),
                 ),
                 pw.SizedBox(height: 70),
@@ -95,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 pw.SizedBox(height: 10),
                 pw.Text(
                     "I am writing to testify that PE & JE Healthcare Limited is in partnership "
-                    " with our company... as a sub-contractor. PE & JE Healthcare Limited provides carers "
+                    " with our company Open Heart Recruitment Ltd as a sub-contractor. PE & JE Healthcare Limited provides carers "
                     "and nurses to my clients. Their vetting and staff recruitment are of a higher standard,"
                     " compliant and responsive to industrial requirements. This can be evidenced by the quality"
                     " of the excellent staff they supply to us.",
